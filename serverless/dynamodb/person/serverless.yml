@@ -1,0 +1,43 @@
+service: person-dynamodb-stack
+
+provider:
+  name: aws
+  runtime: java8
+  region: ap-northeast-1
+  role: arn:aws:iam::132698621221:role/Administrator
+  timeout: 30
+
+resources:
+  Resources:
+    PersonsDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+        -
+          AttributeName: id
+          AttributeType: S
+        -
+          AttributeName: name
+          AttributeType: S
+        KeySchema:
+        -
+          AttributeName: id
+          KeyType: HASH
+        -
+          AttributeName: name
+          KeyType: RANGE
+        LocalSecondaryIndexes:
+        - IndexName: id-name
+          KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: name
+            KeyType: RANGE
+          Projection:
+            NonKeyAttributes:
+            - Name
+            ProjectionType: INCLUDE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: persons
