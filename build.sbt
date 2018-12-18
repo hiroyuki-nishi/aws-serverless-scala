@@ -20,6 +20,10 @@ val commonLibraryDependencies = Seq(
   "ch.megard" %% "akka-http-cors" % "0.3.1"
 )
 
+val testDependencies = Seq(
+  "org.scalatest" % "scalatest_2.12" % "3.0.5" % "test"
+)
+
 lazy val root = (project in file(".")).aggregate(person, account)
 
 lazy val domain = (project in file("domain"))
@@ -34,7 +38,7 @@ lazy val person = (project in file("application/person")).
   enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin)
   .settings(
     name := "person",
-    libraryDependencies ++= commonLibraryDependencies
+    libraryDependencies ++= commonLibraryDependencies ++ testDependencies
   )
   .settings(assemblyJarName in assembly := "person.jar")
   .settings(
