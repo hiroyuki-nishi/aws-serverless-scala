@@ -5,6 +5,7 @@ import dynamodb.AccountRepositoryOnDynamoDB
 
 object Main extends App {
   import AccountViewJsonProtocol._
+
   def findAccount(accountRepository: AccountRepository): Unit = {
     (for {
       t <- accountRepository.findAllBy("person_1", 1, 1)

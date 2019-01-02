@@ -5,11 +5,7 @@ import akka.util.Timeout
 
 import scala.concurrent.ExecutionContextExecutor
 
-class PersonRepositoryOnAkkaHttp() extends PersonRestRoutes {
-//  class PersonRepositoryOnAkkaHttp(system: ActorSystem, timeout: Timeout) extends PersonRestRoutes {
-//  implicit val requestTimeout = timeout
-//  implicit def executionContext: ExecutionContextExecutor = system.dispatcher
-}
+class PersonRepositoryOnAkkaHttp() extends PersonRestRoutes {}
 
 trait PersonRestRoutes extends Route {
   import akka.http.scaladsl.model.StatusCodes._
@@ -31,22 +27,6 @@ trait PersonRestRoutes extends Route {
                 case Left(l) => "error"
               })
             }
-          }
-        } ~
-        path("account") {
-          get {
-            import account.AccountRepository
-            import account.AccountViewJsonProtocol._
-            val accountRepository = new AccountRepository with AccountRepositoryOnDynamoDB
-            complete(OK, accountRepository.findAllBy("person_1", 1, 1) match {
-              case Right(r) => r.toPageJson.compactPrint
-              case Left(l) => "error"
-            })
-          }
-        } ~
-        path("hoge") {
-          get {
-            complete(OK)
           }
         }
       }

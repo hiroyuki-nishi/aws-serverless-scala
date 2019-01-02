@@ -2,7 +2,6 @@ import sbt.Keys._
 import sbt._
 import sbtrelease.Version
 
-//name := "hello"
 resolvers += Resolver.sonatypeRepo("public")
 scalaVersion := "2.12.2"
 releaseNextVersion := { ver => Version(ver).map(_.bumpMinor.string).getOrElse("Error") }
