@@ -39,21 +39,18 @@ trait PersonRepositoryOnDynamoDB extends DynamoDBWrapper {
     val pageNo: Int
   }] =
     Try {
-      // TODO QueryRequestの理解
-      val countQueryRequest: QueryRequest = new QueryRequest(tableName)
+      val countQueryRequest = new QueryRequest(tableName) // TODO QueryRequest
         .withSelect(Select.COUNT)
-        .withIndexName(IndexIdWithName) // TODO
+        .withIndexName(IndexIdWithName) // TODO withIndexName
         .withKeyConditionExpression(s"$AttrId = :id") // TODO
         .withExpressionAttributeValues(
         Map(":id" -> new AttributeValue().withS(id)).asJava)
 
       lazy val totalSize = dynamoDBClient.query(countQueryRequest).getCount
-      // TODO refactoring
       val querySpec = new QuerySpec()
         .withHashKey(AttrId, id)
         .withScanIndexForward(false)
         .withMaxPageSize(pageSize)
-
       val table         = getTable(tableName).get
       val index         = table.getIndex(IndexIdWithName) //TODO
       val queryOutcomes = index.query(querySpec)

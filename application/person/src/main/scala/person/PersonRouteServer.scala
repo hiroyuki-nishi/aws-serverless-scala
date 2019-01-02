@@ -19,6 +19,5 @@ class PersonRouteServer(r: server.Route) extends HttpApp {
     super.postServerShutdown(attempt, system)
     system.terminate()
     Await.result(system.whenTerminated, 30.seconds)
-    ()
   }
 }
