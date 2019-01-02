@@ -42,7 +42,7 @@ lazy val person = (project in file("application/person")).
     maintainer in Docker := "k636362",
     packageName in Docker := "dockerised-akka-http",
     dockerBaseImage := "openjdk:8-jre-alpine",
-    dockerExposedPorts := Seq(8080),
+    dockerExposedPorts := Seq(8080, 8080),
     mainClass in assembly := Some("person.Server")
   )
   .dependsOn(domain, infrastracture)
