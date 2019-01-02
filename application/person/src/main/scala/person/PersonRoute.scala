@@ -22,11 +22,11 @@ trait PersonRestRoutes extends Route {
             get {
               import person.PersonViewJsonProtocol._
               val personRepository = new PersonRepository with PersonRepositoryOnDynamoDB
-              complete(OK, "hoge")
-//              complete(OK, personRepository.findAllBy("person_1", 1, 1) match {
-//                case Right(v) => v.toPageJson.compactPrint
-//                case Left(l) => "error"
-//              })
+//              complete(OK, "hoge")
+              complete(OK, personRepository.findAllBy("person_1", 1, 1) match {
+                case Right(v) => v.toPageJson.compactPrint
+                case Left(l) => "error"
+              })
             }
           }
         }

@@ -12,7 +12,7 @@ import scala.util.Try
 
 trait PersonRepositoryOnDynamoDB extends DynamoDBWrapper {
   lazy override val tableName  = "persons"
-  lazy override val regionName = "ap-northeast-1"
+  lazy override val regionName = "us-east-1"
   val AttrId         = "id"
   val AttrName       = "name"
   val IndexIdWithName = s"${AttrId}-${AttrName}"

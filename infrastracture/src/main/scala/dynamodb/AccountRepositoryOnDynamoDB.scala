@@ -11,7 +11,7 @@ import scala.util.Try
 
 trait AccountRepositoryOnDynamoDB extends DynamoDBWrapper {
   lazy override val tableName = "accounts"
-  lazy override val regionName = "ap-northeast-1"
+  lazy override val regionName = "us-east-1"
 
   val AttrPersonId = "person_id"
   val AttrEmail = "email"
