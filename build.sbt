@@ -41,6 +41,7 @@ lazy val person = (project in file("application/person")).
     assemblyJarName in assembly := "person.jar",
     maintainer in Docker := "k636362",
     packageName in Docker := "dockerised-akka-http",
+    version := "0.1.1-SNAPSHOT",
     dockerBaseImage := "openjdk:8-jre-alpine",
     dockerExposedPorts := Seq(8080, 8080),
     mainClass in assembly := Some("person.Server")
