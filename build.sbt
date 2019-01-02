@@ -37,11 +37,9 @@ lazy val person = (project in file("application/person")).
   enablePlugins(JavaAppPackaging, AshScriptPlugin, DockerPlugin)
   .settings(
     name := "person",
-    libraryDependencies ++= commonLibraryDependencies ++ testDependencies
-  )
-  .settings(assemblyJarName in assembly := "person.jar")
-  .settings(
-    maintainer in Docker := "xxx",
+    libraryDependencies ++= commonLibraryDependencies ++ testDependencies,
+    assemblyJarName in assembly := "person.jar",
+    maintainer in Docker := "k636362",
     packageName in Docker := "dockerised-akka-http",
     dockerBaseImage := "openjdk:8-jre-alpine",
     dockerExposedPorts := Seq(8080),
