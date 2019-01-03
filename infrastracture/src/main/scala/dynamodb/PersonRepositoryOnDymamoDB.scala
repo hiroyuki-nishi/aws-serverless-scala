@@ -86,5 +86,17 @@ trait PersonRepositoryOnDynamoDB extends DynamoDBWrapper {
     },
       Right(_)
     )
+
+//  private def convert2Entity(list: List[Map[String, AttributeValue]]) = {
+//    list.map(x => Person("1", "hoge"))
+//  }
+
+  def findAll(): Either[RepositoryError, Seq[Person]] = {
+//    scan[Person](convert2Entity)
+    scan[Person].fold(
+      l => Left(l),
+      r => Right(r.map(x => Person(x.get("id").getS(), x.get("name").getS())))
+    )
+  }
 }
 

@@ -1,16 +1,19 @@
 package dynamodb
 
+import java.util
+
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
 import com.amazonaws.services.dynamodbv2.document._
 import com.amazonaws.services.dynamodbv2.document.internal.IteratorSupport
 import com.amazonaws.services.dynamodbv2.document.spec.{QuerySpec, UpdateItemSpec}
 import com.amazonaws.services.dynamodbv2.document.utils.{NameMap, ValueMap}
-import com.amazonaws.services.dynamodbv2.model.{AttributeValue, ConditionalCheckFailedException, QueryRequest}
+import com.amazonaws.services.dynamodbv2.model.{AttributeValue, ConditionalCheckFailedException, QueryRequest, ScanRequest}
+import domain.RepositoryError
 
 import scala.annotation.tailrec
 import scala.collection.JavaConverters._
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 trait DynamoDBWrapper {
   protected val tableName: String
@@ -172,4 +175,14 @@ trait DynamoDBWrapper {
       t ← getTable()
       _ ← Try(t.deleteItem(hashKeyName, hashKeyValue, rangeKeyName, rangeKeyValue))
     } yield ()
+
+  protected def scan[E]: Either[RepositoryError, Seq[util.Map[String, AttributeValue]]] = {
+//    protected def scan[E]: Either[RepositoryError, Seq[E]] = {
+//    protected def scan[E](convert2Entity: Seq[Map[String, AttributeValue]] => Seq[E]): Either[RepositoryError, Seq[E]] = {
+    Try(dynamoDBClient.scan(new ScanRequest().withTableName(tableName))) match {
+      case Success(v) => Right(v.getItems().asScala.toSeq)
+//      case Success(v) => Right(convert2Entity(v.getItems().asScala.toSeq))
+      case Failure(e) => Left(RepositoryError(new Throwable))
+    }
+  }
 }
