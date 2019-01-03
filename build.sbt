@@ -51,16 +51,25 @@ lazy val person = (project in file("application/person")).
 lazy val account = (project in file("application/account"))
   .settings(
     name := "account",
-    libraryDependencies ++= commonLibraryDependencies
+    libraryDependencies ++= commonLibraryDependencies,
+    assemblyJarName in assembly := "account.jar"
   )
-  .settings(assemblyJarName in assembly := "account.jar")
   .dependsOn(domain, infrastracture)
+
+lazy val profile = (project in file("application/profile"))
+  .settings(
+    name := "profile",
+    libraryDependencies ++= commonLibraryDependencies,
+    assemblyJarName in assembly := "profile.jar"
+  )
+  .dependsOn(domain, infrastracture) //TODO infraに依存している
 
 lazy val infrastracture = (project in file("infrastracture"))
   .settings(
     name := "infrastracture",
     libraryDependencies ++= Seq(
-      "com.amazonaws" % "aws-java-sdk-dynamodb" % "1.11.29"
+      "com.amazonaws" % "aws-java-sdk-dynamodb" % "1.11.29",
+      "com.amazonaws" % "aws-java-sdk-s3" % "1.11.475"
     )
   ).dependsOn(domain)
 

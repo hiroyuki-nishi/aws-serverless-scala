@@ -25,7 +25,7 @@ trait PersonRepositoryOnDynamoDB extends DynamoDBWrapper {
   def findBy(id: String, name: String): Either[RepositoryError, Option[Person]] =
     getItem(AttrId, id, AttrName, name)(record2Entity)
       .fold(
-        e => Left(RepositoryError()),
+        e => Left(RepositoryError(e)),
         Right(_)
       )
 
@@ -82,7 +82,7 @@ trait PersonRepositoryOnDynamoDB extends DynamoDBWrapper {
         throw new IndexOutOfBoundsException(s"$pageNo")
       }
     }.fold({
-      case _: IndexOutOfBoundsException => Left(RepositoryError())
+      case _: IndexOutOfBoundsException => Left(RepositoryError(new Throwable))
     },
       Right(_)
     )

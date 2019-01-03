@@ -1,5 +1,5 @@
 package object domain {
-  case class RepositoryError()
+  case class RepositoryError(error: Throwable)
 
   trait Page[E] {
     val totalSize: Int
