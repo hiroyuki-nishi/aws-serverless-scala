@@ -7,5 +7,4 @@ trait PersonRepository {
   def findAllBy(id: String,
                 pageNo: Int,
                 pageSize: Int): Either[RepositoryError, Page[Person]]
-  def findAll(): Either[RepositoryError, Seq[Person]]
 }

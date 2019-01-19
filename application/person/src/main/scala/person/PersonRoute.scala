@@ -23,24 +23,9 @@ trait PersonRestRoutes extends Route {
               import person.PersonViewJsonProtocol._
               val personRepository = new PersonRepository with PersonRepositoryOnDynamoDB
               complete(OK, personRepository.findAllBy("person_1", 1, 1) match {
-                case Right(v) => {
-                  v.toPageJson.compactPrint
-                }
+                case Right(v) => v.toPageJson.compactPrint
                 case Left(l) => "error"
               })
-            }
-          }
-        } ~
-        pathPrefix("all") {
-          pathEndOrSingleSlash {
-            get {
-              import person.PersonViewJsonProtocol._
-              val personRepository = new PersonRepository with PersonRepositoryOnDynamoDB
-              personRepository.findAll match {
-                case Right(v) => print(v)
-                case Left(l) => "error"
-              }
-              complete(OK)
             }
           }
         }

@@ -4,4 +4,4 @@ package profile
 //case class Name(value: String)
 
 //case class Profile(id: Id, name: Name)
-case class Profile(id: String, name: String)
+case class Profile(companyId: String, id: String, identifer: String, updated: String)

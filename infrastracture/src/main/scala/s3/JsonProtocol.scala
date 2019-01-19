@@ -1,15 +1,16 @@
 package s3
 
+import profile.Profile
 import spray.json._
 
-case class ProfileJson(id: String,
-                       name: String)
 
 object ProfileJsonProtocol extends DefaultJsonProtocol {
   implicit val profileJosonFormat =
-    jsonFormat(ProfileJson,
+    jsonFormat(Profile,
+      "company_id",
       "id",
-      "name"
+      "identifer",
+      "updated"
     )
 }
 
